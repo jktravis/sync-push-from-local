@@ -1,0 +1,30 @@
+{
+  "name": "sync-proto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next dev"
+  },
+  "keywords": [],
+  "author": "Joshua Travis <joshua.travis@gmail.com> (http://jktravis.com)",
+  "license": "ISC",
+  "dependencies": {
+    "es6-promisify": "^6.0.2",
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "localforage": "^1.7.3",
+    "next": "^9.1.6",
+    "ramda": "^0.26.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-window": "^1.8.5",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  }
+}
