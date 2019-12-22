@@ -11,7 +11,10 @@ const syncItem = R.curry((mapper, data) => {
 });
 
 const saveItem = item => {
-  return localForage.setItem(item.id, item).then(() => item);
+  if (item.toggled) {
+    return localForage.setItem(item.id, item).then(() => item);
+  }
+  return localForage.removeItem(item.id).then(() => item);
 };
 
 export {syncItem, saveItem};
