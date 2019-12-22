@@ -10,11 +10,8 @@ const syncItem = R.curry((mapper, data) => {
   });
 });
 
-const saveItem = (item) => {
+const saveItem = item => {
   return localForage.setItem(item.id, item).then(() => item);
 };
 
-export {
-  syncItem,
-  saveItem,
-};
+export {syncItem, saveItem};

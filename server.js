@@ -26,12 +26,12 @@ function saveData(data) {
 }
 
 function generateData() {
-    return getData()
-      .then(R.prop('data'))
-      .then(R.append({id: uuid.v4(), message: faker.company.bs()}))
-      .then(R.assoc('data', R.__, {}))
-      .then(saveData)
-      .then(data => socket.emit('now', data));
+  return getData()
+    .then(R.prop('data'))
+    .then(R.append({id: uuid.v4(), message: faker.company.bs()}))
+    .then(R.assoc('data', R.__, {}))
+    .then(saveData)
+    .then(data => socket.emit('now', data));
 }
 
 function getRandomInt(min, max) {
@@ -42,8 +42,14 @@ let port = 3000;
 
 io.on('connect', socket => {
   setInterval(() => {
-    getData()
-      .then(data => socket.emit('now', data));
+    getData().then(content => {
+      const randomIdx = getRandomInt(0, content.data.length - 1);
+      const newData = R.set(R.lensPath(['data', randomIdx, 'message']), faker.company.bs(), content);
+      socket.emit(
+        'now',
+        newData
+      );
+    });
   }, 2000);
 });
 

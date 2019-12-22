@@ -4,12 +4,17 @@ import io from 'socket.io-client';
 import * as R from 'ramda';
 import {syncItem, saveItem} from '../api/storage';
 
-const Row = ({id, message, onClick, toggled}) => (
-  <li>
-    <button onClick={() => onClick(id)}>{String(toggled)}</button> {message}{' '}
-    {id}
-  </li>
-);
+
+const Row = ({id, message, onClick, toggled}) => {
+  return (
+    <li style={{display: 'flex' }}>
+      <span style={{flexBasis: 70}}>
+      <button onClick={() => onClick(id)}>{String(toggled)}</button>
+    </span>
+      <span> {message} </span>
+    </li>
+  );
+};
 
 const remapData = R.compose(
   R.indexBy(R.prop('id')),
@@ -41,12 +46,7 @@ function Hello() {
           R.map(d => syncItem(merge(d), d)),
           R.values,
         )(d),
-      ).then(
-        R.compose(
-          setData,
-          R.indexBy(R.prop('id')),
-        ),
-      );
+      ).then(R.compose(setData, R.indexBy(R.prop('id'))));
     });
     return socket.close.bind(socket);
   }, []);
@@ -59,7 +59,11 @@ function Hello() {
         <ul style={{listStyle: 'none'}}>
           {R.map(
             row => (
-              <Row key={row.id} {...row} onClick={toggleRow} />
+              <Row
+                key={`${row.id}-${row.message}`}
+                {...row}
+                onClick={toggleRow}
+              />
             ),
             values,
           )}{' '}
